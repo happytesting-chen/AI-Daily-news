@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/news.js": {
+      "maxDuration": 60
+    },
+    "api/refresh.js": {
+      "maxDuration": 60
+    },
+    "api/enrich-images.js": {
+      "maxDuration": 60
+    },
+    "api/podcast.js": {
+      "maxDuration": 30
+    },
+    "api/tts.js": {
+      "maxDuration": 20
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/refresh",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/enrich-images",
+      "schedule": "10 0 * * *"
+    }
+  ]
+}
