@@ -12,6 +12,9 @@
     "api/enrich-images.js": {
       "maxDuration": 60
     },
+    "api/send-telegram.js": {
+      "maxDuration": 20
+    },
     "api/podcast.js": {
       "maxDuration": 30
     },
@@ -21,7 +24,11 @@
   },
   "crons": [
     {
-      "path": "/api/refresh",
+      "path": "/api/refresh?sendTelegram=0",
+      "schedule": "40 23 * * *"
+    },
+    {
+      "path": "/api/send-telegram",
       "schedule": "0 0 * * *"
     },
     {

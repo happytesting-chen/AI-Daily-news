@@ -12,7 +12,8 @@ Deployment notes for **AI Daily News**.
 
 Configured in `vercel.json`:
 
-- `/api/refresh` → `0 0 * * *` → 08:00 Asia/Singapore
+- `/api/refresh?sendTelegram=0` → `40 23 * * *` → 07:40 Asia/Singapore
+- `/api/send-telegram` → `0 0 * * *` → 08:00 Asia/Singapore
 - `/api/enrich-images` → `10 0 * * *` → 08:10 Asia/Singapore
 
 ## Required Environment Variables
@@ -42,8 +43,12 @@ curl -H "Authorization: Bearer $CRON_SECRET" https://your-site.vercel.app/api/en
 ### `/api/refresh`
 - generates fresh stories
 - writes snapshot to Redis
-- sends Telegram notification
+- can skip Telegram notification when called with `sendTelegram=0`
 - returns quickly
+
+### `/api/send-telegram`
+- reads the latest snapshot from Redis
+- sends the Telegram message exactly on schedule
 
 ### `/api/enrich-images`
 - reads existing snapshot from Redis

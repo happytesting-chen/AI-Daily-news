@@ -18,14 +18,16 @@ Keep entries brief and operational.
 - Combined work exceeded the Vercel function time budget on a slow run
 
 ### Fix
-- Split the flow into two endpoints:
-  - `/api/refresh`
+- Split the flow into separate scheduled endpoints:
+  - `/api/refresh?sendTelegram=0`
+  - `/api/send-telegram`
   - `/api/enrich-images`
-- Keep Telegram send inside the fast refresh path
+- Pre-generate content before 08:00
+- Send the Telegram message at 08:00 sharp
 - Move OG image enrichment into a separate follow-up cron
 
 ### Follow-up
-- Monitor whether `/api/refresh` completes reliably at 08:00 Singapore time
+- Monitor whether pre-generation completes reliably by 08:00 Singapore time
 - If timeouts continue, reduce story count or simplify the generation workload
 
 ---

@@ -1,7 +1,6 @@
-import { buildNewsSnapshot } from "../lib/news-core.js";
-import { writeSnapshot } from "../lib/news-store.js";
+import { readSnapshot } from "../lib/news-store.js";
 
-function getRefreshAuthState(req) {
+function getAuthState(req) {
   const cronSecret = (process.env.CRON_SECRET || "").trim();
   const authHeader = req.headers.authorization || "";
   const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : "";
@@ -44,41 +43,26 @@ async function sendTelegramMessage(text) {
   return { skipped: false };
 }
 
-function shouldSendTelegram(req) {
-  const sendParam = req.query?.sendTelegram;
-  if (Array.isArray(sendParam)) return sendParam[0] !== "0";
-  if (typeof sendParam === "string") return sendParam !== "0";
-  return true;
-}
-
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const authState = getRefreshAuthState(req);
+  const authState = getAuthState(req);
 
   if (req.headers["x-debug-auth"] === "1") {
-    return res.status(200).json({
-      ok: false,
-      debug: authState,
-    });
+    return res.status(200).json({ ok: false, debug: authState });
   }
 
   if (!authState.authorized) {
     return res.status(401).json({ error: "Unauthorized", debug: authState });
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: "ANTHROPIC_API_KEY not configured" });
-  }
-
   try {
-    const snapshot = await buildNewsSnapshot(apiKey);
-    await writeSnapshot(snapshot);
-
-    const path = snapshot.generatedAt;
+    const snapshot = await readSnapshot();
+    if (!snapshot?.generatedAt) {
+      return res.status(404).json({ error: "No snapshot available to announce" });
+    }
 
     const generatedLocal = new Date(snapshot.generatedAt).toLocaleString("en-SG", {
       timeZone: "Asia/Singapore",
@@ -86,27 +70,16 @@ export default async function handler(req, res) {
       timeStyle: "short",
     });
 
-    const telegramResult = shouldSendTelegram(req)
-      ? await sendTelegramMessage(
-          `AI Daily is ready.\n\nUpdated: ${generatedLocal} (Singapore)\nhttps://ai-daily-news-delta.vercel.app`
-        )
-      : { skipped: true, reason: "sendTelegram=0" };
+    const telegram = await sendTelegramMessage(
+      `AI Daily is ready.\n\nUpdated: ${generatedLocal} (Singapore)\nhttps://ai-daily-news-delta.vercel.app`
+    );
 
     return res.status(200).json({
       ok: true,
       generatedAt: snapshot.generatedAt,
-      path,
-      counts: {
-        stories: snapshot.stories?.length || 0,
-        byCategory: (snapshot.stories || []).reduce((acc, story) => {
-          const key = story.category || "Uncategorized";
-          acc[key] = (acc[key] || 0) + 1;
-          return acc;
-        }, {}),
-      },
-      telegram: telegramResult,
+      telegram,
     });
   } catch (err) {
-    return res.status(500).json({ error: "Refresh failed", detail: err.message });
+    return res.status(500).json({ error: "Telegram send failed", detail: err.message });
   }
 }

@@ -21,18 +21,20 @@ Examples:
 - Project: AI Daily News
 - Stack: Vite + React frontend, Vercel serverless API routes, Redis snapshot storage
 - Primary scheduled workflow:
-  - `/api/refresh` at 08:00 Singapore time
+  - `/api/refresh?sendTelegram=0` at 07:40 Singapore time
+  - `/api/send-telegram` at 08:00 Singapore time
   - `/api/enrich-images` at 08:10 Singapore time
-- Telegram notification is sent from `/api/refresh`
+- Telegram notification is sent from `/api/send-telegram`
 - Image enrichment was split into a separate endpoint to reduce cron timeout risk
 
 ## Decisions
 
 ### Cron split
-- Decision: split the old single refresh flow into two stages
-- Why: `FUNCTION_INVOCATION_TIMEOUT` occurred when generation and image enrichment ran in the same Vercel function
+- Decision: split the old single refresh flow into multiple stages
+- Why: `FUNCTION_INVOCATION_TIMEOUT` occurred when generation and image enrichment ran in the same Vercel function, and message delivery needed to happen exactly at 08:00 Singapore time
 - Result:
-  - `/api/refresh` now generates the snapshot, saves it, sends Telegram, and returns quickly
+  - `/api/refresh?sendTelegram=0` pre-generates the snapshot at 07:40
+  - `/api/send-telegram` sends the user-facing Telegram message at 08:00 sharp
   - `/api/enrich-images` runs afterward and enriches OG images separately
 
 ### Secrets handling
