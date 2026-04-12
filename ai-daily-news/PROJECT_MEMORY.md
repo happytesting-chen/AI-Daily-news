@@ -45,7 +45,8 @@ Examples:
 
 ## Content Rules
 
-- For `AI System Security`, `AI for Defense`, and `AI-Powered Attacks`, stories must be from the last 24 hours only
+- For `AI System Security`, `AI for Defense`, and `AI-Powered Attacks`, check the article date before summarizing
+- If one of those stories is older than 24 hours at generation time, exclude it and do not summarize it
 - Only `AI New Releases` may include items up to 7 days old
 
 ## Operational Notes

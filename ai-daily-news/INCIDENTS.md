@@ -29,6 +29,7 @@ Keep entries brief and operational.
 ### Follow-up
 - Monitor whether pre-generation completes reliably by 08:00 Singapore time
 - If timeouts continue, reduce story count or simplify the generation workload
+- Enforce stricter freshness handling so non-release categories are date-checked before summarization
 
 ---
 
