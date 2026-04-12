@@ -1,0 +1,21 @@
+# Local env and secrets
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.production.local
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Vercel local metadata
+.vercel/
+
+# Common dependency/build outputs
+node_modules/
+dist/
+
+# Potential secret notes
+secrets management.txt
