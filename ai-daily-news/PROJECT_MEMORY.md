@@ -43,6 +43,11 @@ Examples:
 - Workspace repo now ignores common local secret files via `.gitignore`
 - Do not place live tokens in repo docs or memory files
 
+## Content Rules
+
+- For `AI System Security`, `AI for Defense`, and `AI-Powered Attacks`, stories must be from the last 24 hours only
+- Only `AI New Releases` may include items up to 7 days old
+
 ## Operational Notes
 
 - Required runtime env vars include:

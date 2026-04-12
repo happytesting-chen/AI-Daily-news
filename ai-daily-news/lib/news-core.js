@@ -51,7 +51,8 @@ Return ONLY a valid JSON array of 6-8 stories, no markdown. Each story object mu
 Rules:
 - Return 8-10 stories total: at least 1-2 per category, including at least 2 for "AI New Releases".
 - For "AI New Releases": search GitHub Trending and HuggingFace trending — include newly released agent frameworks, open-source models, and major lab announcements even if < 7 days old.
-- Last 24 hours for security categories; last 7 days allowed for "AI New Releases".
+- For every category EXCEPT "AI New Releases", every story must be from the last 24 hours only. If a candidate is older than 24 hours, exclude it.
+- Only "AI New Releases" may use stories up to 7 days old.
 - Classify by article meaning, not only source.
 - Prefer source diversity.
 - Double-check every url — it must contain a path beyond "/" (e.g. /2026/04/slug). Never use a bare domain as the url.`;
