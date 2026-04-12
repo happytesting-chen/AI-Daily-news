@@ -28,12 +28,12 @@
       "schedule": "40 23 * * *"
     },
     {
-      "path": "/api/send-telegram",
-      "schedule": "0 0 * * *"
+      "path": "/api/enrich-images",
+      "schedule": "50 23 * * *"
     },
     {
-      "path": "/api/enrich-images",
-      "schedule": "10 0 * * *"
+      "path": "/api/send-telegram",
+      "schedule": "0 0 * * *"
     }
   ]
 }

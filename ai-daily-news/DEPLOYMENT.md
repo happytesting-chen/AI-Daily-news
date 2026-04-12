@@ -13,8 +13,8 @@ Deployment notes for **AI Daily News**.
 Configured in `vercel.json`:
 
 - `/api/refresh?sendTelegram=0` → `40 23 * * *` → 07:40 Asia/Singapore
+- `/api/enrich-images` → `50 23 * * *` → 07:50 Asia/Singapore
 - `/api/send-telegram` → `0 0 * * *` → 08:00 Asia/Singapore
-- `/api/enrich-images` → `10 0 * * *` → 08:10 Asia/Singapore
 
 ## Required Environment Variables
 

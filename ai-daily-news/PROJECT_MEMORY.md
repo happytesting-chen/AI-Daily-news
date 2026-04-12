@@ -22,10 +22,10 @@ Examples:
 - Stack: Vite + React frontend, Vercel serverless API routes, Redis snapshot storage
 - Primary scheduled workflow:
   - `/api/refresh?sendTelegram=0` at 07:40 Singapore time
+  - `/api/enrich-images` at 07:50 Singapore time
   - `/api/send-telegram` at 08:00 Singapore time
-  - `/api/enrich-images` at 08:10 Singapore time
 - Telegram notification is sent from `/api/send-telegram`
-- Image enrichment was split into a separate endpoint to reduce cron timeout risk
+- Image enrichment runs before the user-facing Telegram message so the site is more complete by 08:00
 
 ## Decisions
 

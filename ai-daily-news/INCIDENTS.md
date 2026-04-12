@@ -20,11 +20,11 @@ Keep entries brief and operational.
 ### Fix
 - Split the flow into separate scheduled endpoints:
   - `/api/refresh?sendTelegram=0`
-  - `/api/send-telegram`
   - `/api/enrich-images`
-- Pre-generate content before 08:00
+  - `/api/send-telegram`
+- Pre-generate content at 07:40
+- Enrich images at 07:50
 - Send the Telegram message at 08:00 sharp
-- Move OG image enrichment into a separate follow-up cron
 
 ### Follow-up
 - Monitor whether pre-generation completes reliably by 08:00 Singapore time
