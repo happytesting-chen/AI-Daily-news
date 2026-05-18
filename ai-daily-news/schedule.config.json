@@ -1,0 +1,20 @@
+{
+  "timezone": "Asia/Singapore",
+  "jobs": [
+    {
+      "name": "Generate news snapshot",
+      "endpoint": "/api/refresh?sendTelegram=0",
+      "time_sgt": "07:20"
+    },
+    {
+      "name": "Enrich article images",
+      "endpoint": "/api/enrich-images",
+      "time_sgt": "07:35"
+    },
+    {
+      "name": "Send Telegram notification",
+      "endpoint": "/api/send-telegram",
+      "time_sgt": "08:00"
+    }
+  ]
+}

@@ -6,6 +6,9 @@
     "api/news.js": {
       "maxDuration": 60
     },
+    "api/health.js": {
+      "maxDuration": 10
+    },
     "api/refresh.js": {
       "maxDuration": 60
     },
@@ -25,11 +28,11 @@
   "crons": [
     {
       "path": "/api/refresh?sendTelegram=0",
-      "schedule": "40 23 * * *"
+      "schedule": "20 23 * * *"
     },
     {
       "path": "/api/enrich-images",
-      "schedule": "50 23 * * *"
+      "schedule": "35 23 * * *"
     },
     {
       "path": "/api/send-telegram",

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "schedule": "node scripts/apply-schedule.js"
   },
   "dependencies": {
     "@radix-ui/react-separator": "^1.1.7",
